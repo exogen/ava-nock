@@ -1,0 +1,26 @@
+{
+  "request": {
+    "method": "GET",
+    "host": "musicbrainz.org",
+    "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json",
+    "body": ""
+  },
+  "response": {
+    "statusCode": 200,
+    "statusMessage": "OK",
+    "headers": {
+      "date": "Fri, 10 Nov 2017 07:29:25 GMT",
+      "content-type": "application/json; charset=utf-8",
+      "content-length": "621",
+      "connection": "close",
+      "vary": "Accept-Encoding",
+      "x-ratelimit-limit": "1200",
+      "x-ratelimit-remaining": "898",
+      "x-ratelimit-reset": "1510298966",
+      "server": "Plack::Handler::Starlet",
+      "etag": "\"95cb0c47b9bfb3f77075154922dc05ed\"",
+      "access-control-allow-origin": "*"
+    },
+    "body": "{\"begin_area\":{\"sort-name\":\"Aberdeen\",\"disambiguation\":\"\",\"id\":\"a640b45c-c173-49b1-8030-973603e895b5\",\"name\":\"Aberdeen\"},\"isnis\":[\"0000000123486830\"],\"gender\":null,\"type-id\":\"e431f5f6-b5d2-343d-8b36-72607fffb74b\",\"life-span\":{\"end\":\"1994-04-05\",\"begin\":\"1988-01\",\"ended\":true},\"disambiguation\":\"90s US grunge band\",\"gender-id\":null,\"area\":{\"sort-name\":\"United States\",\"disambiguation\":\"\",\"iso-3166-1-codes\":[\"US\"],\"name\":\"United States\",\"id\":\"489ce91b-6658-3307-9877-795b68554c98\"},\"country\":\"US\",\"name\":\"Nirvana\",\"id\":\"5b11f4ce-a62d-471e-81fc-a69a8278c7da\",\"end_area\":null,\"ipis\":[],\"type\":\"Group\",\"sort-name\":\"Nirvana\"}"
+  }
+}
