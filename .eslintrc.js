@@ -1,17 +1,11 @@
 module.exports = {
-  extends: ["standard", "prettier", "prettier/standard"],
+  extends: ['standard', 'prettier', 'prettier/standard'],
   env: {
     es6: true,
     node: true
   },
-  plugins: ["prettier"],
+  plugins: ['prettier'],
   rules: {
-    "prettier/prettier": [
-      "warn",
-      {
-        singleQuote: true,
-        semi: false
-      }
-    ]
+    'prettier/prettier': 'warn'
   }
-};
+}

@@ -1,0 +1,120 @@
+[
+  [
+    "using axios",
+    [
+      {
+        "body": "",
+        "method": "get",
+        "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json",
+        "rawHeaders": [
+          "Date",
+          "Tue, 14 Nov 2017 22:43:00 GMT",
+          "Content-Type",
+          "application/json; charset=utf-8",
+          "Content-Length",
+          "621",
+          "Connection",
+          "close",
+          "Vary",
+          "Accept-Encoding",
+          "X-RateLimit-Limit",
+          "1200",
+          "X-RateLimit-Remaining",
+          "936",
+          "X-RateLimit-Reset",
+          "1510699381",
+          "Server",
+          "Plack::Handler::Starlet",
+          "ETag",
+          "\"659eb936a5e87d3eeab9ebb20c96a89d\"",
+          "Access-Control-Allow-Origin",
+          "*"
+        ],
+        "reqheaders": {
+          "accept": "application/json, text/plain, */*",
+          "host": "musicbrainz.org"
+        },
+        "response": {
+          "area": {
+            "disambiguation": "",
+            "id": "489ce91b-6658-3307-9877-795b68554c98",
+            "iso-3166-1-codes": [
+              "US"
+            ],
+            "name": "United States",
+            "sort-name": "United States"
+          },
+          "begin_area": {
+            "disambiguation": "",
+            "id": "a640b45c-c173-49b1-8030-973603e895b5",
+            "name": "Aberdeen",
+            "sort-name": "Aberdeen"
+          },
+          "country": "US",
+          "disambiguation": "90s US grunge band",
+          "end_area": null,
+          "gender": null,
+          "gender-id": null,
+          "id": "5b11f4ce-a62d-471e-81fc-a69a8278c7da",
+          "ipis": [
+          ],
+          "isnis": [
+            "0000000123486830"
+          ],
+          "life-span": {
+            "begin": "1988-01",
+            "end": "1994-04-05",
+            "ended": true
+          },
+          "name": "Nirvana",
+          "sort-name": "Nirvana",
+          "type": "Group",
+          "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b"
+        },
+        "scope": "https://musicbrainz.org:443",
+        "status": 200
+      }
+    ]
+  ],
+  [
+    "using axios to get XML",
+    [
+      {
+        "body": "",
+        "method": "get",
+        "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=xml",
+        "rawHeaders": [
+          "Date",
+          "Tue, 14 Nov 2017 22:43:02 GMT",
+          "Content-Type",
+          "application/xml; charset=utf-8",
+          "Content-Length",
+          "798",
+          "Connection",
+          "close",
+          "Vary",
+          "Accept-Encoding",
+          "X-RateLimit-Limit",
+          "1200",
+          "X-RateLimit-Remaining",
+          "1039",
+          "X-RateLimit-Reset",
+          "1510699383",
+          "Server",
+          "Plack::Handler::Starlet",
+          "ETag",
+          "\"38f45b3b95490f830f2350bc2b294cbd\"",
+          "Access-Control-Allow-Origin",
+          "*"
+        ],
+        "reqheaders": {
+          "accept": "application/json, text/plain, */*",
+          "host": "musicbrainz.org"
+        },
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><metadata xmlns=\"http://musicbrainz.org/ns/mmd-2.0#\"><artist id=\"5b11f4ce-a62d-471e-81fc-a69a8278c7da\" type-id=\"e431f5f6-b5d2-343d-8b36-72607fffb74b\" type=\"Group\"><name>Nirvana</name><sort-name>Nirvana</sort-name><disambiguation>90s US grunge band</disambiguation><isni-list><isni>0000000123486830</isni></isni-list><country>US</country><area id=\"489ce91b-6658-3307-9877-795b68554c98\"><name>United States</name><sort-name>United States</sort-name><iso-3166-1-code-list><iso-3166-1-code>US</iso-3166-1-code></iso-3166-1-code-list></area><begin-area id=\"a640b45c-c173-49b1-8030-973603e895b5\"><name>Aberdeen</name><sort-name>Aberdeen</sort-name></begin-area><life-span><begin>1988-01</begin><end>1994-04-05</end><ended>true</ended></life-span></artist></metadata>",
+        "scope": "https://musicbrainz.org:443",
+        "status": 200
+      }
+    ]
+  ]
+]
