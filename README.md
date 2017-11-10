@@ -28,19 +28,12 @@
 
 ## Configuration
 
-### `fixtureDir`
+### fixtureDir
 
 ```ts
-string | ({
-  protocol: string,
-  method: string,
-  host: string,
-  path: string,
-  headers: {},
-  body: string
-}) => string
+string | (RequestData) => string
 ```
 
-### `requestKey`
+### requestKey
 
-### `requestFixture`
+### requestFixture
