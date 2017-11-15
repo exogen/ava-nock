@@ -92,3 +92,37 @@ You can control ava-nock’s behavior using the `NOCK_MODE` environment variable
   that do not have a fixture will result in an error. This is the default
   behavior. It is useful if you are done writing tests and want to verify that
   they all pass. Use this mode in CI environments.
+
+## Configuration
+
+ava-nock can be configured using either an `ava-nock` field in your package.json
+file, or by importing and calling `configure()`.
+
+### Options
+
+#### decodeResponse
+
+When Nock outputs a response, it is normally minimally altered from how it
+arrived. If the response is compressed, Nock will output an array of encoded
+buffers. By default, ava-nock will instead attempt to decode responses encoded
+with `gzip` and `deflate` so that fixtures are more easily inspectable. If
+successful, the relevant `Content-Encoding` header will also be removed from the
+saved fixture so that clients don’t attempt to decode it again.
+
+Set this to `false` to leave responses encoded.
+
+#### pathFilter
+
+A function or array of arguments to pass to Nock’s `filteringPath` method on
+each scope. The transformation will be applied to both incoming request paths
+and outgoing fixture paths.
+
+For example, the following value will cause any saved fixtures to have
+`secretKey` query parameters replaced with `secretKey=*`, and will likewise
+cause any requests with a `secretKey` value to match against it.
+
+```js
+{
+  pathFilter: ['([?&]secretKey=)([^&]*)', '$1*']
+}
+```

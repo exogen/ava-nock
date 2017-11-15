@@ -20,6 +20,44 @@ function getTestFile() {
   return testModule.filename
 }
 
+function applyPathFilterToScope(scope) {
+  const { pathFilter } = config
+  if (typeof pathFilter === 'function') {
+    return scope.filteringPath(config.pathFilter)
+  } else if (Array.isArray(pathFilter)) {
+    const args = [...pathFilter]
+    if (typeof args[0] === 'string') {
+      args[0] = new RegExp(args[0], 'g')
+    }
+    return scope.filteringPath(...args)
+  } else if (pathFilter != null) {
+    throw new Error(`Unknown pathFilter type: ${pathFilter}`)
+  }
+  return scope
+}
+
+function applyPathFilterToCall(call) {
+  const { pathFilter } = config
+  if (typeof pathFilter === 'function') {
+    return {
+      ...call,
+      path: pathFilter(call.path)
+    }
+  } else if (Array.isArray(pathFilter)) {
+    const args = [...pathFilter]
+    if (typeof args[0] === 'string') {
+      args[0] = new RegExp(args[0], 'g')
+    }
+    return {
+      ...call,
+      path: call.path.replace(...args)
+    }
+  } else if (pathFilter != null) {
+    throw new Error(`Unknown pathFilter type: ${pathFilter}`)
+  }
+  return call
+}
+
 function loadFixtures(t) {
   if (fixtureData) {
     return Promise.resolve(fixtureData)
@@ -50,33 +88,37 @@ function saveFixture(t) {
   if (!context.recordedCalls) {
     return Promise.resolve()
   }
-  const prepare = config.decodeResponse
-    ? Promise.all(context.recordedCalls.map(decodeResponse)).then(
-        decodedCalls => {
-          context.recordedCalls = decodedCalls
-        }
-      )
-    : Promise.resolve()
-  return prepare.then(() => loadFixtures(t)).then(fixtures => {
-    if (
-      !context.savedCalls ||
-      objectHash(context.recordedCalls) !== objectHash(context.savedCalls)
-    ) {
-      fixtures.set(context.title, context.recordedCalls)
-      const outputData = Array.from(fixtures)
-      // Sort fixtures so they don't move around when re-recording.
-      outputData.sort((a, b) => {
-        if (a[0] < b[0]) {
-          return -1
-        } else if (a[0] > b[0]) {
-          return 1
-        } else {
-          return 0
-        }
-      })
-      return writeFixture(fixturePath, outputData, { overwrite: true })
+  let outputCalls = Promise.resolve(context.recordedCalls)
+  if (config.decodeResponse) {
+    outputCalls = outputCalls.then(calls =>
+      Promise.all(calls.map(decodeResponse))
+    )
+  }
+  if (config.pathFilter) {
+    outputCalls = outputCalls.then(calls => calls.map(applyPathFilterToCall))
+  }
+  return Promise.all([loadFixtures(t), outputCalls]).then(
+    ([fixtures, outputCalls]) => {
+      if (
+        !context.inputCalls ||
+        objectHash(outputCalls) !== objectHash(context.inputCalls)
+      ) {
+        fixtures.set(context.title, outputCalls)
+        const outputData = Array.from(fixtures)
+        // Sort fixtures so they don't move around when re-recording.
+        outputData.sort((a, b) => {
+          if (a[0] < b[0]) {
+            return -1
+          } else if (a[0] > b[0]) {
+            return 1
+          } else {
+            return 0
+          }
+        })
+        return writeFixture(fixturePath, outputData, { overwrite: true })
+      }
     }
-  })
+  )
 }
 
 function beforeEach(t) {
@@ -93,9 +135,11 @@ function beforeEach(t) {
       } else if (permissions.write) {
         nockManager.startRecording({ requestHeaders: true })
       }
-      context.savedCalls = fixture
+      context.inputCalls = fixture
       if (fixture && fixture.length) {
-        context.scopes = nockManager.loadCalls(fixture)
+        context.scopes = nockManager
+          .loadCalls(fixture)
+          .map(applyPathFilterToScope)
       } else {
         context.scopes = []
       }
@@ -110,7 +154,7 @@ function afterEach(t) {
     context.recordedCalls = nockManager.getRecordedCalls()
   }
   nockManager.disable()
-  if (context.savedCalls) {
+  if (context.inputCalls) {
     debug('Checking that expected requests were made.')
     context.scopes.forEach(scope => {
       if (!scope.isDone()) {

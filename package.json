@@ -15,10 +15,7 @@
   "author": "Brian Beck <exogen@gmail.com>",
   "license": "MIT",
   "main": "lib/index.js",
-  "files": [
-    "lib",
-    "yarn.lock"
-  ],
+  "files": ["lib", "yarn.lock"],
   "scripts": {
     "build": "npm run build:lib",
     "build:lib": "babel src --out-dir lib --ignore \"**/*.test.js\"",
@@ -40,27 +37,19 @@
     "test:record": "NOCK_MODE=record ava"
   },
   "ava": {
-    "require": [
-      "babel-register"
-    ],
-    "files": [
-      "src/**/*.test.js",
-      "test"
-    ]
+    "require": ["babel-register"],
+    "files": ["src/**/*.test.js", "test"]
+  },
+  "ava-nock": {
+    "pathFilter": ["([?&]secretKey=)([^&]*)", "$1*"]
   },
   "prettier": {
     "semi": false,
     "singleQuote": true
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "README.md": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.js": ["eslint --fix", "git add"],
+    "README.md": ["prettier --write", "git add"]
   },
   "peerDependencies": {
     "ava": "^0.23.0"
@@ -95,6 +84,7 @@
     "nyc": "^11.3.0",
     "prettier": "^1.8.2",
     "request": "^2.83.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "uuid": "^3.1.0"
   }
 }
