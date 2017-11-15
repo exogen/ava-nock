@@ -68,20 +68,15 @@
   "dependencies": {
     "debug": "^3.1.0",
     "fs-extra": "^4.0.2",
-    "http-proxy": "^1.16.2",
     "json-parse-better-errors": "^1.0.1",
     "json-stable-stringify": "^1.0.1",
     "nock": "^9.1.0",
     "object-hash": "^1.2.0",
-    "replay": "^2.1.4",
-    "request": "^2.83.0",
-    "temp-write": "^3.3.0",
-    "tempy": "^0.2.1",
-    "uuid": "^3.1.0"
+    "temp-write": "^3.3.0"
   },
   "devDependencies": {
     "ava": "^0.23.0",
-    "axios": "^0.17.0",
+    "axios": "^0.17.1",
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
@@ -99,6 +94,7 @@
     "lint-staged": "^5.0.0",
     "nyc": "^11.3.0",
     "prettier": "^1.8.2",
+    "request": "^2.83.0",
     "rimraf": "^2.6.2"
   }
 }
