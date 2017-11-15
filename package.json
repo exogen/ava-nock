@@ -25,6 +25,7 @@
     "format:other": "prettier --write \"*.md\" \"**/*.json\"",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "precommit": "lint-staged",
     "prepare": "npm run clean && npm run build",
     "test": "npm run lint && npm run test:coverage",
     "test:cache": "NOCK_MODE=cache ava",
@@ -42,6 +43,10 @@
   "prettier": {
     "semi": false,
     "singleQuote": true
+  },
+  "lint-staged": {
+    "*.js": ["eslint --fix", "git add"],
+    "README.md": ["prettier --write", "git add"]
   },
   "peerDependencies": {
     "ava": "^0.23.0"
@@ -75,7 +80,9 @@
     "eslint-plugin-prettier": "^2.3.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
+    "husky": "^0.14.3",
     "isomorphic-fetch": "^2.2.1",
+    "lint-staged": "^5.0.0",
     "nyc": "^11.3.0",
     "prettier": "^1.8.2",
     "rimraf": "^2.6.2"

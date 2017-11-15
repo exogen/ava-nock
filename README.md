@@ -1,14 +1,71 @@
 # ava-nock
 
+Install with npm:
+
 ```console
 $ npm install ava-nock --save-dev
 ```
+
+Install with Yarn:
 
 ```console
 $ yarn add ava-nock --dev
 ```
 
+## How it works
+
+There are generally two approaches for mocking HTTP requests when we don’t
+control or can’t manually mock the code that makes the request: either use a
+proxy to fulfill the requests (this requires starting a server and being able to
+change your request code to point to it), or intercept the host language’s
+underlying code for sending a request. Libraries like
+[yakbak](https://github.com/flickr/yakbak) use the former, while libraries like
+[VCR](https://github.com/vcr/vcr), [Nock](https://github.com/node-nock/nock),
+and [Sepia](https://github.com/linkedin/sepia) use the latter. As the name
+implies, ava-nock uses Nock.
+
+Likewise, there are multiple levels of granularity at which to capture requests.
+One approach is to generate a hash for each request and serve the same response
+any time a matching request is made throughout the entire test suite. Another
+approach is to isolate the specific requests made in each test. This library
+currently supports the latter approach (although it was designed with the former
+approach in mind – maybe someday).
+
 ## Usage
+
+Import and run the `setupTests()` function in any test files that make network
+requests. This function will add `beforeEach`, `afterEach`, and
+`afterEach.always` hooks that manage Nock fixtures for you.
+
+```js
+import test from 'ava'
+import fetch from 'isomorphic-fetch'
+import { setupTests } from 'ava-nock'
+
+setupTests()
+
+test('using fetch to get JSON', t => {
+  return fetch(
+    'https://musicbrainz.org/ws/2/artist/c8da2e40-bd28-4d4e-813a-bd2f51958ba8?fmt=json'
+  )
+    .then(response => response.json())
+    .then(data => {
+      t.is(data.name, 'Lures')
+    })
+})
+```
+
+Fixtures behave similarly to AVA snapshots: they are stored in a `.nock` file
+alongside the test file that generated them. Within each fixture, each test’s
+requests and responses are stored for later playback.
+
+Note that due to the way Nock works by globally intercepting requests to the
+`http` and `https` modules, each test using ava-nock will effectively be run
+serially – otherwise there is no way to isolate requests per-test. The
+`beforeEach` hook will enforce this for you automatically. (Running tests in
+parallel in multiple processes is fine.)
+
+You can control ava-nock’s behavior using the `NOCK_MODE` environment variable.
 
 ## Modes
 
@@ -26,9 +83,8 @@ $ yarn add ava-nock --dev
   network without recording them. This is useful if you are writing new tests
   and want to make sure they pass before recording them.
 * **record** will ignore existing fixtures and record new ones. All requests
-  will hit the network and be recorded. Note that this might leave you with
-  fixtures that are no longer used and should be cleaned up – you may wish to
-  delete your fixture directory before running in this mode.
+  will hit the network and be recorded. When you update the requests made in a
+  test, you should re-record its fixtures.
 * **cache** will replay existing fixtures and record any other requests from the
   network. This is useful if you have written new tests and verified that they
   are correct and ready to be recorded.
