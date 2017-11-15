@@ -1,6 +1,6 @@
 {
   "name": "ava-nock",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "keywords": [
     "ava",
@@ -15,7 +15,10 @@
   "author": "Brian Beck <exogen@gmail.com>",
   "license": "MIT",
   "main": "lib/index.js",
-  "files": ["lib", "yarn.lock"],
+  "files": [
+    "lib",
+    "yarn.lock"
+  ],
   "scripts": {
     "build": "npm run build:lib",
     "build:lib": "babel src --out-dir lib --ignore \"**/*.test.js\"",
@@ -37,16 +40,27 @@
     "test:record": "NOCK_MODE=record ava"
   },
   "ava": {
-    "require": ["babel-register"],
-    "files": ["src/**/*.test.js", "test"]
+    "require": [
+      "babel-register"
+    ],
+    "files": [
+      "src/**/*.test.js",
+      "test"
+    ]
   },
   "prettier": {
     "semi": false,
     "singleQuote": true
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "README.md": ["prettier --write", "git add"]
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "README.md": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "peerDependencies": {
     "ava": "^0.23.0"
