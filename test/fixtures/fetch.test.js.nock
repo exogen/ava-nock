@@ -18,7 +18,7 @@
         "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json",
         "rawHeaders": [
           "Date",
-          "Wed, 15 Nov 2017 05:13:58 GMT",
+          "Wed, 15 Nov 2017 08:56:03 GMT",
           "Content-Type",
           "application/json; charset=utf-8",
           "Transfer-Encoding",
@@ -30,13 +30,13 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "956",
+          "1175",
           "X-RateLimit-Reset",
-          "1510722839",
+          "1510736164",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
-          "W/\"410e6c160c866e5959dcfa034d68564d\"",
+          "W/\"483cbbb4e2413ecf8a2947e5496204ca\"",
           "Access-Control-Allow-Origin",
           "*"
         ],
@@ -52,7 +52,7 @@
           ],
           "host": "musicbrainz.org"
         },
-        "response": "{\"disambiguation\":\"90s US grunge band\",\"gender\":null,\"type-id\":\"e431f5f6-b5d2-343d-8b36-72607fffb74b\",\"gender-id\":null,\"life-span\":{\"begin\":\"1988-01\",\"ended\":true,\"end\":\"1994-04-05\"},\"country\":\"US\",\"name\":\"Nirvana\",\"type\":\"Group\",\"sort-name\":\"Nirvana\",\"area\":{\"id\":\"489ce91b-6658-3307-9877-795b68554c98\",\"name\":\"United States\",\"sort-name\":\"United States\",\"disambiguation\":\"\",\"iso-3166-1-codes\":[\"US\"]},\"id\":\"5b11f4ce-a62d-471e-81fc-a69a8278c7da\",\"end_area\":null,\"ipis\":[],\"begin_area\":{\"disambiguation\":\"\",\"sort-name\":\"Aberdeen\",\"id\":\"a640b45c-c173-49b1-8030-973603e895b5\",\"name\":\"Aberdeen\"},\"isnis\":[\"0000000123486830\"]}",
+        "response": "{\"begin_area\":{\"sort-name\":\"Aberdeen\",\"name\":\"Aberdeen\",\"id\":\"a640b45c-c173-49b1-8030-973603e895b5\",\"disambiguation\":\"\"},\"id\":\"5b11f4ce-a62d-471e-81fc-a69a8278c7da\",\"gender\":null,\"type-id\":\"e431f5f6-b5d2-343d-8b36-72607fffb74b\",\"isnis\":[\"0000000123486830\"],\"ipis\":[],\"end_area\":null,\"life-span\":{\"end\":\"1994-04-05\",\"ended\":true,\"begin\":\"1988-01\"},\"gender-id\":null,\"name\":\"Nirvana\",\"sort-name\":\"Nirvana\",\"area\":{\"sort-name\":\"United States\",\"id\":\"489ce91b-6658-3307-9877-795b68554c98\",\"name\":\"United States\",\"disambiguation\":\"\",\"iso-3166-1-codes\":[\"US\"]},\"disambiguation\":\"90s US grunge band\",\"type\":\"Group\",\"country\":\"US\"}",
         "scope": "https://musicbrainz.org:443",
         "status": 200
       }
@@ -67,7 +67,7 @@
         "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da",
         "rawHeaders": [
           "Date",
-          "Wed, 15 Nov 2017 05:13:59 GMT",
+          "Wed, 15 Nov 2017 08:56:04 GMT",
           "Content-Type",
           "application/xml; charset=utf-8",
           "Transfer-Encoding",
@@ -79,9 +79,9 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "1159",
+          "972",
           "X-RateLimit-Reset",
-          "1510722841",
+          "1510736164",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",

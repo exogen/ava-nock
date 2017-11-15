@@ -11,13 +11,27 @@ const debug = createLogger('ava-nock:index')
 const config = {
   decodeResponse: true
 }
-const testPath = path.relative(process.cwd(), getTestFile())
-const fixturePath = `${testPath}.nock`
+const fixturePath = getFixturePath()
 let fixtureData
 
-function getTestFile() {
+function getTestPath() {
   const testModule = require.main.children[require.main.children.length - 1]
-  return testModule.filename
+  return path.relative(process.cwd(), testModule.filename)
+}
+
+function getFixturePath() {
+  const testPath = getTestPath()
+  const testDir = path.dirname(testPath)
+  const testName = path.basename(testPath)
+  let fixtureDir = testDir
+  const fixtureName = `${testName}.nock`
+  const parts = new Set(testDir.split(path.sep))
+  if (parts.has('__tests__')) {
+    fixtureDir = path.join(testDir, '__fixtures__')
+  } else if (parts.has('test') || parts.has('tests')) {
+    fixtureDir = path.join(testDir, 'fixtures')
+  }
+  return path.join(fixtureDir, fixtureName)
 }
 
 function applyPathFilterToScope(scope) {
@@ -177,7 +191,7 @@ export function configure(options) {
   Object.assign(config, options)
 }
 
-export function setupTests(ava = require('ava')) {
+export function setupTests(ava = require(process.env.AVA_PATH || 'ava')) {
   ava.beforeEach(beforeEach)
   ava.afterEach(afterEach)
   ava.afterEach.always(afterEachAlways)

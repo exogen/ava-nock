@@ -14,11 +14,11 @@ $ yarn add ava-nock --dev
 
 ## How it works
 
-There are generally two approaches for mocking HTTP requests when we don’t
+There are generally two approaches to mocking HTTP requests when we don’t
 control or can’t manually mock the code that makes the request: either use a
-proxy to fulfill the requests (this requires starting a server and being able to
+proxy to fulfill requests (this requires starting a server and being able to
 change your request code to point to it), or intercept the host language’s
-underlying code for sending a request. Libraries like
+underlying code for sending requests. Libraries like
 [yakbak](https://github.com/flickr/yakbak) use the former, while libraries like
 [VCR](https://github.com/vcr/vcr), [Nock](https://github.com/node-nock/nock),
 and [Sepia](https://github.com/linkedin/sepia) use the latter. As the name
@@ -56,7 +56,8 @@ test('using fetch to get JSON', t => {
 ```
 
 Fixtures behave similarly to AVA snapshots: they are stored in a `.nock` file
-alongside the test file that generated them. Within each fixture, each test’s
+alongside the test file that generated them (or, like snapshots, an adjacent
+`fixtures` or `__fixtures__` directory). Within each fixture, each test’s
 requests and responses are stored for later playback.
 
 Note that due to the way Nock works by globally intercepting requests to the
