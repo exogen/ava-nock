@@ -95,6 +95,7 @@ export default {
   acquire: createLock(release => {
     enable()
     return () => {
+      enableNetwork()
       disable()
       clear()
       return release()
