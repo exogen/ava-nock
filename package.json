@@ -2,6 +2,7 @@
   "name": "ava-nock",
   "version": "0.3.1",
   "description": "",
+  "repository": "git@github.com:exogen/ava-nock",
   "keywords": [
     "ava",
     "testing",
