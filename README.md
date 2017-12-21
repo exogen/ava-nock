@@ -121,9 +121,9 @@ and outgoing fixture paths.
 For example, the following value will cause any saved fixtures to have
 `secretKey` query parameters replaced with `secretKey=*`, and will likewise
 cause any requests with a `secretKey` value to match against it. The requests
-themselves will be sent with their unaltered `secretKey`. This way you can use
-sensitive values in your requests but exclude them from fixtures (and thus
-source control).
+themselves will be sent with their original, unaltered `secretKey` – but it
+will be censored in the fixture. This way you can use sensitive values in your
+requests but keep them out of source control.
 
 ```js
 {
