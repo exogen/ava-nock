@@ -61,14 +61,14 @@ alongside the test file that generated them (or, like snapshots, an adjacent
 requests and responses are stored for later playback.
 
 Note that due to the way Nock works by globally intercepting requests to the
-`http` and `https` modules, each test using ava-nock will effectively be run
-serially – otherwise there is no way to isolate requests per-test. The
-`beforeEach` hook will enforce this for you automatically. (Running tests in
-parallel in multiple processes is fine.)
-
-You can control ava-nock’s behavior using the `NOCK_MODE` environment variable.
+`http` and `https` modules, each test in a file that calls `setupTests()` will
+effectively be run serially – otherwise there is no way to isolate requests
+per-test. The `beforeEach` hook will enforce this for you automatically. Parallel
+tests running in different processes are not affected.
 
 ## Modes
+
+You can control ava-nock’s behavior using the `NOCK_MODE` environment variable.
 
 | NOCK_MODE |    Network requests?    |     Read fixtures?      |     Write fixtures?     |
 | :-------: | :---------------------: | :---------------------: | :---------------------: |
@@ -120,7 +120,10 @@ and outgoing fixture paths.
 
 For example, the following value will cause any saved fixtures to have
 `secretKey` query parameters replaced with `secretKey=*`, and will likewise
-cause any requests with a `secretKey` value to match against it.
+cause any requests with a `secretKey` value to match against it. The requests
+themselves will be sent with their unaltered `secretKey`. This way you can use
+sensitive values in your requests but exclude them from fixtures (and thus
+source control).
 
 ```js
 {
