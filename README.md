@@ -78,18 +78,18 @@ You can control ava-nock’s behavior using the `NOCK_MODE` environment variable
 |   cache   | :ballot_box_with_check: | :ballot_box_with_check: | :ballot_box_with_check: |
 |   play    |                         | :ballot_box_with_check: |                         |
 
-* **live** will disable replay and recording completely. All requests will hit
+- **live** will disable replay and recording completely. All requests will hit
   the network like normal.
-* **preview** will replay existing fixtures and send any other requests over the
+- **preview** will replay existing fixtures and send any other requests over the
   network without recording them. This is useful if you are writing new tests
   and want to make sure they pass before recording them.
-* **record** will ignore existing fixtures and record new ones. All requests
+- **record** will ignore existing fixtures and record new ones. All requests
   will hit the network and be recorded. When you update the requests made in a
   test, you should re-record its fixtures.
-* **cache** will replay existing fixtures and record any other requests from the
+- **cache** will replay existing fixtures and record any other requests from the
   network. This is useful if you have written new tests and verified that they
   are correct and ready to be recorded.
-* **play** will replay existing fixtures and never hit the network. Any requests
+- **play** will replay existing fixtures and never hit the network. Any requests
   that do not have a fixture will result in an error. This is the default
   behavior. It is useful if you are done writing tests and want to verify that
   they all pass. Use this mode in CI environments.
@@ -129,5 +129,25 @@ keep them out of source control.
 ```js
 {
   pathFilter: ['([?&]secretKey=)([^&]*)', '$1*']
+}
+```
+
+#### bodyFilter
+
+A function or array of arguments to pass to Nock’s `filteringRequestBody` method on
+each scope. The transformation will be applied to both incoming request bodies
+and outgoing fixture bodies.
+
+For example, the following value will cause any saved fixtures to have
+`secretKey` query parameters replaced with `secretKey=*`, and will likewise
+cause any requests with a `secretKey` value to match against it (the `*` is
+not meaningful, it’s just an example placeholder). The requests themselves will
+be sent with their original, unaltered `secretKey` – but it will be censored
+in the fixture. This way you can use sensitive values in your requests but
+keep them out of source control.
+
+```js
+{
+  bodyFilter: ['([?&]secretKey=)([^&]*)', '$1*']
 }
 ```
