@@ -42,7 +42,8 @@
     "files": ["src/**/*.test.js", "test"]
   },
   "ava-nock": {
-    "pathFilter": ["([?&]secretKey=)([^&]*)", "$1*"]
+    "pathFilter": ["([?&]secretKey=)([^&]*)", "$1*"],
+    "bodyFilter": ["\"password\":\"([a-z]+)\"", "\"password\":\"*\""]
   },
   "prettier": {
     "semi": false,

@@ -19,12 +19,15 @@ const debug = createLogger('ava-nock:manager')
 
 let isActive = true
 let isRecording
+
 disable()
 
 function enable() {
   if (!isActive) {
     debug('Nock enabled.')
+
     isActive = true
+
     nock.activate()
   }
 }
@@ -32,36 +35,44 @@ function enable() {
 function disable() {
   if (isActive) {
     debug('Nock disabled.')
+
     isActive = false
     isRecording = false
+
     nock.restore()
   }
 }
 
 function enableNetwork() {
   debug('Network calls enabled.')
+
   nock.enableNetConnect()
 }
 
 function disableNetwork() {
   debug('Network calls disabled.')
+
   nock.disableNetConnect()
 }
 
 function clear() {
   debug('Clearing Nock interceptors and recordings.')
+
   nock.cleanAll()
   nock.recorder.clear()
 }
 
 function intercept(scope) {
   debug(`Adding interceptor for scope: ${scope}`)
+
   return nock(scope)
 }
 
 function startRecording({ requestHeaders = false } = {}) {
   debug('Started recording.')
+
   isRecording = true
+
   nock.recorder.rec({
     dont_print: true,
     output_objects: true,
@@ -71,12 +82,15 @@ function startRecording({ requestHeaders = false } = {}) {
 
 function getRecordedCalls() {
   const calls = nock.recorder.play()
+
   debug(`Stopped recording, captured ${calls.length} network call(s).`)
+
   return calls
 }
 
 function loadCalls(calls) {
   debug(`Loaded ${calls.length} saved network call(s).`)
+
   return nock.define(calls)
 }
 
@@ -94,10 +108,12 @@ export default {
   loadCalls,
   acquire: createLock(release => {
     enable()
+
     return () => {
       enableNetwork()
       disable()
       clear()
+
       return release()
     }
   })

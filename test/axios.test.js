@@ -52,3 +52,21 @@ test('making a request with a filtered secret key', t => {
       })
   )
 })
+
+test('making a request with a filtered password', t => {
+  const username = 'hello'
+
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, 1000)
+  }).then(() =>
+    axios
+      .post('https://postman-echo.com/post', {
+        username,
+        password: 'world'
+      })
+      .then(response => response.data.data)
+      .then(data => {
+        t.is(data.username, username)
+      })
+  )
+})

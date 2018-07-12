@@ -3,6 +3,7 @@ import createLogger from 'debug'
 const debug = createLogger('ava-nock:modes')
 
 export const NOCK_MODE = process.env.NOCK_MODE || 'play'
+
 const modes = new Map([
   [
     'live',
@@ -44,6 +45,7 @@ const modes = new Map([
     }
   ]
 ])
+
 if (modes.has(NOCK_MODE)) {
   debug(modes.get(NOCK_MODE).description)
 } else {
@@ -51,4 +53,5 @@ if (modes.has(NOCK_MODE)) {
     `Unrecognized NOCK_MODE, valid values are: ${[...modes.keys()].join(', ')}`
   )
 }
+
 export const permissions = modes.get(NOCK_MODE).permissions

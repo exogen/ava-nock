@@ -10,8 +10,10 @@ const debug = createLogger('ava-nock:fixtures')
 
 export function readFixture(filename) {
   filename = path.relative(process.cwd(), filename)
+
   return new Promise((resolve, reject) => {
     debug(`Reading fixture: ${filename}`)
+
     fs.readFile(filename, 'utf8', (err, data) => {
       if (err) {
         reject(err)
@@ -24,16 +26,22 @@ export function readFixture(filename) {
 
 export function writeFixture(filename, data, options) {
   filename = path.relative(process.cwd(), filename)
+
   const output = stringifyJSON(data, { space: 2 }) + '\n'
+
   debug(`Writing fixture to temporary file.`)
+
   return tempWrite(output)
     .then(tempFile => {
       const dirname = path.dirname(filename)
+
       debug(`Ensuring fixture directory exists: ${dirname}`)
+
       return ensureDir(dirname).then(() => tempFile)
     })
     .then(tempFile => {
       debug(`Moving fixture into place: ${filename}`)
+
       return move(tempFile, filename, options)
     })
 }

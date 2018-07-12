@@ -34,41 +34,75 @@ function getFixturePath() {
   return path.join(fixtureDir, fixtureName)
 }
 
-function applyPathFilterToScope(scope) {
-  const { pathFilter } = config
-  if (typeof pathFilter === 'function') {
-    return scope.filteringPath(config.pathFilter)
-  } else if (Array.isArray(pathFilter)) {
-    const args = [...pathFilter]
+function applyFilterToScope(scope) {
+  const { bodyFilter, pathFilter } = config
+
+  if (typeof bodyFilter === 'function') {
+    scope = scope.filteringRequestBody(bodyFilter)
+  } else if (Array.isArray(bodyFilter)) {
+    const args = [...bodyFilter]
+
     if (typeof args[0] === 'string') {
       args[0] = new RegExp(args[0], 'g')
     }
-    return scope.filteringPath(...args)
+
+    scope = scope.filteringRequestBody(...args)
+  } else if (bodyFilter != null) {
+    throw new Error(`Unknown bodyFilter type: ${pathFilter}`)
+  }
+
+  if (typeof pathFilter === 'function') {
+    scope = scope.filteringPath(pathFilter)
+  } else if (Array.isArray(pathFilter)) {
+    const args = [...pathFilter]
+
+    if (typeof args[0] === 'string') {
+      args[0] = new RegExp(args[0], 'g')
+    }
+
+    scope = scope.filteringPath(...args)
   } else if (pathFilter != null) {
     throw new Error(`Unknown pathFilter type: ${pathFilter}`)
   }
+
   return scope
 }
 
-function applyPathFilterToCall(call) {
-  const { pathFilter } = config
-  if (typeof pathFilter === 'function') {
-    return {
-      ...call,
-      path: pathFilter(call.path)
-    }
-  } else if (Array.isArray(pathFilter)) {
-    const args = [...pathFilter]
+function applyFilterToCall(call) {
+  const { bodyFilter, pathFilter } = config
+
+  if (typeof bodyFilter === 'function') {
+    call.body = bodyFilter(call.body)
+  } else if (Array.isArray(bodyFilter)) {
+    const args = [...bodyFilter]
+
     if (typeof args[0] === 'string') {
       args[0] = new RegExp(args[0], 'g')
     }
-    return {
-      ...call,
-      path: call.path.replace(...args)
+
+    if (typeof call.body === 'object') {
+      call.body = JSON.stringify(call.body)
     }
+
+    call.body = call.body.replace(...args)
+  } else if (bodyFilter != null) {
+    throw new Error(`Unknown bodyFilter type: ${bodyFilter}`)
+  }
+
+  if (typeof pathFilter === 'function') {
+    call.path = pathFilter(call.path)
+  } else if (Array.isArray(pathFilter)) {
+    const args = [...pathFilter]
+
+    if (typeof args[0] === 'string') {
+      args[0] = new RegExp(args[0], 'g')
+    }
+
+    call.path = call.path.replace(...args)
   } else if (pathFilter != null) {
     throw new Error(`Unknown pathFilter type: ${pathFilter}`)
   }
+
   return call
 }
 
@@ -76,41 +110,51 @@ function loadFixtures(t) {
   if (fixtureData) {
     return Promise.resolve(fixtureData)
   }
+
   return Promise.resolve(permissions.read ? readFixture(fixturePath) : [])
     .catch(err => {
       if (err.code === 'ENOENT') {
         return []
       }
+
       throw err
     })
     .then(data => {
       fixtureData = new Map(data)
+
       return fixtureData
     })
 }
 
 function loadFixture(t) {
   const context = t.context.nock
+
   if (!permissions.read) {
     return Promise.resolve(null)
   }
+
   return loadFixtures(t).then(fixtures => fixtures.get(context.title) || null)
 }
 
 function saveFixture(t) {
   const context = t.context.nock
+
   if (!context.recordedCalls) {
     return Promise.resolve()
   }
+
   let outputCalls = Promise.resolve(context.recordedCalls)
+
   if (config.decodeResponse) {
     outputCalls = outputCalls.then(calls =>
       Promise.all(calls.map(decodeResponse))
     )
   }
-  if (config.pathFilter) {
-    outputCalls = outputCalls.then(calls => calls.map(applyPathFilterToCall))
+
+  if (config.pathFilter || config.bodyFilter) {
+    outputCalls = outputCalls.then(calls => calls.map(applyFilterToCall))
   }
+
   return Promise.all([loadFixtures(t), outputCalls]).then(
     ([fixtures, outputCalls]) => {
       if (
@@ -118,7 +162,9 @@ function saveFixture(t) {
         objectHash(outputCalls) !== objectHash(context.inputCalls)
       ) {
         fixtures.set(context.title, outputCalls)
+
         const outputData = Array.from(fixtures)
+
         // Sort fixtures so they don't move around when re-recording.
         outputData.sort((a, b) => {
           if (a[0] < b[0]) {
@@ -129,6 +175,7 @@ function saveFixture(t) {
             return 0
           }
         })
+
         return writeFixture(fixturePath, outputData, { overwrite: true })
       }
     }
@@ -139,21 +186,25 @@ function beforeEach(t) {
   const context = {
     title: t.title.startsWith('beforeEach for ') ? t.title.slice(15) : t.title
   }
+
   t.context.nock = context
+
   debug(`Starting beforeEach hook: ${context.title}`)
+
   return nockManager.acquire().then(release => {
     context.release = release
+
     return loadFixture(t).then(fixture => {
       if (fixture || !permissions.network) {
         nockManager.disableNetwork()
       } else if (permissions.write) {
         nockManager.startRecording({ requestHeaders: true })
       }
+
       context.inputCalls = fixture
+
       if (fixture && fixture.length) {
-        context.scopes = nockManager
-          .loadCalls(fixture)
-          .map(applyPathFilterToScope)
+        context.scopes = nockManager.loadCalls(fixture).map(applyFilterToScope)
       } else {
         context.scopes = []
       }
@@ -163,13 +214,18 @@ function beforeEach(t) {
 
 function afterEach(t) {
   const context = t.context.nock
+
   debug(`Starting afterEach hook: ${context.title}`)
+
   if (nockManager.isRecording()) {
     context.recordedCalls = nockManager.getRecordedCalls()
   }
+
   nockManager.disable()
+
   if (context.inputCalls) {
     debug('Checking that expected requests were made.')
+
     context.scopes.forEach(scope => {
       if (!scope.isDone()) {
         t.fail(
@@ -180,6 +236,7 @@ function afterEach(t) {
       }
     })
   }
+
   return saveFixture(t)
 }
 

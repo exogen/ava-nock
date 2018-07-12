@@ -1,5 +1,67 @@
 [
   [
+    "making a request with a filtered password",
+    [
+      {
+        "body": "{\"username\":\"hello\",\"password\":\"*\"}",
+        "method": "post",
+        "path": "/post",
+        "rawHeaders": [
+          "Content-Type",
+          "application/json; charset=utf-8",
+          "Date",
+          "Thu, 12 Jul 2018 08:22:40 GMT",
+          "ETag",
+          "W/\"18e-B1nSLenBjmDXwdqqvgINl3ZIdIo\"",
+          "Server",
+          "nginx",
+          "set-cookie",
+          "sails.sid=s%3AqG56jSTdEH67a9_4Jd1BhOHXefmxXu42.gpG3pTnTMsjIv4vFslZRQiGC0hUc37QpwY4VYsFPJJw; Path=/; HttpOnly",
+          "Vary",
+          "Accept-Encoding",
+          "Content-Length",
+          "398",
+          "Connection",
+          "Close"
+        ],
+        "reqheaders": {
+          "accept": "application/json, text/plain, */*",
+          "content-length": 39,
+          "content-type": "application/json;charset=utf-8",
+          "host": "postman-echo.com"
+        },
+        "response": {
+          "args": {
+          },
+          "data": {
+            "password": "world",
+            "username": "hello"
+          },
+          "files": {
+          },
+          "form": {
+          },
+          "headers": {
+            "accept": "application/json, text/plain, */*",
+            "content-length": "39",
+            "content-type": "application/json;charset=utf-8",
+            "host": "postman-echo.com",
+            "user-agent": "axios/0.17.1",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https"
+          },
+          "json": {
+            "password": "world",
+            "username": "hello"
+          },
+          "url": "https://postman-echo.com/post"
+        },
+        "scope": "https://postman-echo.com:443",
+        "status": 200
+      }
+    ]
+  ],
+  [
     "making a request with a filtered secret key",
     [
       {
