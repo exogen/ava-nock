@@ -42,9 +42,7 @@ test('making a request with a filtered secret key', t => {
   }).then(() =>
     axios
       .get(
-        `https://musicbrainz.org/ws/2/artist/c8da2e40-bd28-4d4e-813a-bd2f51958ba8?secretKey=${
-          secretKey
-        }`
+        `https://musicbrainz.org/ws/2/artist/c8da2e40-bd28-4d4e-813a-bd2f51958ba8?secretKey=${secretKey}`
       )
       .then(response => response.data)
       .then(data => {
