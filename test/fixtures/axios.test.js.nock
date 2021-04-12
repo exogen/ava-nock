@@ -4,15 +4,15 @@
     [
       {
         "body": "",
-        "method": "get",
+        "method": "GET",
         "path": "/ws/2/artist/c8da2e40-bd28-4d4e-813a-bd2f51958ba8?secretKey=*",
         "rawHeaders": [
           "Date",
-          "Sun, 19 Nov 2017 03:41:09 GMT",
+          "Mon, 12 Apr 2021 07:46:59 GMT",
           "Content-Type",
           "application/json; charset=utf-8",
           "Content-Length",
-          "543",
+          "758",
           "Connection",
           "close",
           "Vary",
@@ -20,15 +20,17 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "828",
+          "560",
           "X-RateLimit-Reset",
-          "1511062869",
+          "1618213619",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
-          "\"e1ad8d13b9da8913eff75172071dd02e\"",
+          "\"1d3bbf8e490d1d5796526de958347792\"",
           "Access-Control-Allow-Origin",
-          "*"
+          "*",
+          "X-Cache-Status",
+          "MISS"
         ],
         "reqheaders": {
           "accept": "application/json, text/plain, */*",
@@ -39,16 +41,29 @@
             "disambiguation": "",
             "id": "10adc6b5-63bf-4b4e-993e-ed83b05c22fc",
             "name": "Seattle",
-            "sort-name": "Seattle"
+            "sort-name": "Seattle",
+            "type": null,
+            "type-id": null
+          },
+          "begin-area": {
+            "disambiguation": "",
+            "id": "10adc6b5-63bf-4b4e-993e-ed83b05c22fc",
+            "name": "Seattle",
+            "sort-name": "Seattle",
+            "type": null,
+            "type-id": null
           },
           "begin_area": {
             "disambiguation": "",
             "id": "10adc6b5-63bf-4b4e-993e-ed83b05c22fc",
             "name": "Seattle",
-            "sort-name": "Seattle"
+            "sort-name": "Seattle",
+            "type": null,
+            "type-id": null
           },
           "country": null,
           "disambiguation": "Seattle trio",
+          "end-area": null,
           "end_area": null,
           "gender": null,
           "gender-id": null,
@@ -67,6 +82,7 @@
           "type": "Group",
           "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b"
         },
+        "responseIsBinary": false,
         "scope": "https://musicbrainz.org:443",
         "status": 200
       }
@@ -77,15 +93,15 @@
     [
       {
         "body": "",
-        "method": "get",
+        "method": "GET",
         "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json",
         "rawHeaders": [
           "Date",
-          "Sun, 19 Nov 2017 03:41:06 GMT",
+          "Mon, 12 Apr 2021 07:46:58 GMT",
           "Content-Type",
           "application/json; charset=utf-8",
           "Content-Length",
-          "621",
+          "857",
           "Connection",
           "close",
           "Vary",
@@ -93,15 +109,17 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "1075",
+          "930",
           "X-RateLimit-Reset",
-          "1511062867",
+          "1618213619",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
-          "\"ec7b0ea1ca86471c891c0b6114ffcdfc\"",
+          "\"35a3338117f24dfd065747b094be580e\"",
           "Access-Control-Allow-Origin",
-          "*"
+          "*",
+          "X-Cache-Status",
+          "UPDATING"
         ],
         "reqheaders": {
           "accept": "application/json, text/plain, */*",
@@ -115,16 +133,29 @@
               "US"
             ],
             "name": "United States",
-            "sort-name": "United States"
+            "sort-name": "United States",
+            "type": null,
+            "type-id": null
+          },
+          "begin-area": {
+            "disambiguation": "",
+            "id": "a640b45c-c173-49b1-8030-973603e895b5",
+            "name": "Aberdeen",
+            "sort-name": "Aberdeen",
+            "type": null,
+            "type-id": null
           },
           "begin_area": {
             "disambiguation": "",
             "id": "a640b45c-c173-49b1-8030-973603e895b5",
             "name": "Aberdeen",
-            "sort-name": "Aberdeen"
+            "sort-name": "Aberdeen",
+            "type": null,
+            "type-id": null
           },
           "country": "US",
           "disambiguation": "90s US grunge band",
+          "end-area": null,
           "end_area": null,
           "gender": null,
           "gender-id": null,
@@ -132,7 +163,8 @@
           "ipis": [
           ],
           "isnis": [
-            "0000000123486830"
+            "0000000123486830",
+            "0000000123487390"
           ],
           "life-span": {
             "begin": "1988-01",
@@ -144,6 +176,7 @@
           "type": "Group",
           "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b"
         },
+        "responseIsBinary": false,
         "scope": "https://musicbrainz.org:443",
         "status": 200
       }
@@ -154,15 +187,15 @@
     [
       {
         "body": "",
-        "method": "get",
+        "method": "GET",
         "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=xml",
         "rawHeaders": [
           "Date",
-          "Sun, 19 Nov 2017 03:41:07 GMT",
+          "Mon, 12 Apr 2021 07:46:59 GMT",
           "Content-Type",
           "application/xml; charset=utf-8",
-          "Content-Length",
-          "798",
+          "Transfer-Encoding",
+          "chunked",
           "Connection",
           "close",
           "Vary",
@@ -170,21 +203,24 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "1168",
+          "741",
           "X-RateLimit-Reset",
-          "1511062869",
+          "1618213619",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
-          "\"55025fdeb01a259db50b348b35332107\"",
+          "\"7baabb90f872d8f2e6a89774d80a93a7\"",
           "Access-Control-Allow-Origin",
-          "*"
+          "*",
+          "X-Cache-Status",
+          "STALE"
         ],
         "reqheaders": {
           "accept": "application/json, text/plain, */*",
           "host": "musicbrainz.org"
         },
-        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><metadata xmlns=\"http://musicbrainz.org/ns/mmd-2.0#\"><artist type-id=\"e431f5f6-b5d2-343d-8b36-72607fffb74b\" type=\"Group\" id=\"5b11f4ce-a62d-471e-81fc-a69a8278c7da\"><name>Nirvana</name><sort-name>Nirvana</sort-name><disambiguation>90s US grunge band</disambiguation><isni-list><isni>0000000123486830</isni></isni-list><country>US</country><area id=\"489ce91b-6658-3307-9877-795b68554c98\"><name>United States</name><sort-name>United States</sort-name><iso-3166-1-code-list><iso-3166-1-code>US</iso-3166-1-code></iso-3166-1-code-list></area><begin-area id=\"a640b45c-c173-49b1-8030-973603e895b5\"><name>Aberdeen</name><sort-name>Aberdeen</sort-name></begin-area><life-span><begin>1988-01</begin><end>1994-04-05</end><ended>true</ended></life-span></artist></metadata>",
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<metadata xmlns=\"http://musicbrainz.org/ns/mmd-2.0#\"><artist id=\"5b11f4ce-a62d-471e-81fc-a69a8278c7da\" type=\"Group\" type-id=\"e431f5f6-b5d2-343d-8b36-72607fffb74b\"><name>Nirvana</name><sort-name>Nirvana</sort-name><disambiguation>90s US grunge band</disambiguation><isni-list><isni>0000000123486830</isni><isni>0000000123487390</isni></isni-list><country>US</country><area id=\"489ce91b-6658-3307-9877-795b68554c98\"><name>United States</name><sort-name>United States</sort-name><iso-3166-1-code-list><iso-3166-1-code>US</iso-3166-1-code></iso-3166-1-code-list></area><begin-area id=\"a640b45c-c173-49b1-8030-973603e895b5\"><name>Aberdeen</name><sort-name>Aberdeen</sort-name></begin-area><life-span><begin>1988-01</begin><end>1994-04-05</end><ended>true</ended></life-span></artist></metadata>\n",
+        "responseIsBinary": false,
         "scope": "https://musicbrainz.org:443",
         "status": 200
       }

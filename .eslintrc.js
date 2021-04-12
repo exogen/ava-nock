@@ -1,14 +1,15 @@
 module.exports = {
-  extends: ['standard', 'prettier', 'prettier/standard'],
+  extends: ['standard', 'prettier'],
+  parser: '@babel/eslint-parser',
   env: {
     es6: true,
-    node: true
+    node: true,
   },
   parserOptions: {
-    ecmaVersion: 6
+    ecmaVersion: 6,
   },
-  plugins: ['prettier'],
+  plugins: ['@babel', 'prettier'],
   rules: {
-    'prettier/prettier': 'warn'
-  }
-}
+    'prettier/prettier': 'warn',
+  },
+};

@@ -38,21 +38,21 @@ requests. This function will add `beforeEach`, `afterEach`, and
 `afterEach.always` hooks that manage Nock fixtures for you.
 
 ```js
-import test from 'ava'
-import fetch from 'isomorphic-fetch'
-import { setupTests } from 'ava-nock'
+import test from 'ava';
+import fetch from 'isomorphic-fetch';
+import { setupTests } from 'ava-nock';
 
-setupTests()
+setupTests();
 
-test('using fetch to get JSON', t => {
+test('using fetch to get JSON', (t) => {
   return fetch(
     'https://musicbrainz.org/ws/2/artist/c8da2e40-bd28-4d4e-813a-bd2f51958ba8?fmt=json'
   )
-    .then(response => response.json())
-    .then(data => {
-      t.is(data.name, 'Lures')
-    })
-})
+    .then((response) => response.json())
+    .then((data) => {
+      t.is(data.name, 'Lures');
+    });
+});
 ```
 
 Fixtures behave similarly to AVA snapshots: they are stored in a `.nock` file
@@ -128,6 +128,6 @@ keep them out of source control.
 
 ```js
 {
-  pathFilter: ['([?&]secretKey=)([^&]*)', '$1*']
+  pathFilter: ['([?&]secretKey=)([^&]*)', '$1*'];
 }
 ```

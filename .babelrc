@@ -1,13 +1,12 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
         "targets": {
-          "node": "8.10"
+          "node": "12.20.0"
         }
       }
     ]
-  ],
-  "plugins": ["syntax-object-rest-spread"]
+  ]
 }

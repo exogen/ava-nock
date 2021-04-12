@@ -11,73 +11,73 @@
  * when the lock is acquired and disabled (and cleared) when the lock is
  * released.
  */
-import nock from 'nock'
-import createLogger from 'debug'
-import createLock from './lock'
+import nock from 'nock';
+import createLogger from 'debug';
+import createLock from './lock';
 
-const debug = createLogger('ava-nock:manager')
+const debug = createLogger('ava-nock:manager');
 
-let isActive = true
-let isRecording
-disable()
+let isActive = true;
+let isRecording;
+disable();
 
 function enable() {
   if (!isActive) {
-    debug('Nock enabled.')
-    isActive = true
-    nock.activate()
+    debug('Nock enabled.');
+    isActive = true;
+    nock.activate();
   }
 }
 
 function disable() {
   if (isActive) {
-    debug('Nock disabled.')
-    isActive = false
-    isRecording = false
-    nock.restore()
+    debug('Nock disabled.');
+    isActive = false;
+    isRecording = false;
+    nock.restore();
   }
 }
 
 function enableNetwork() {
-  debug('Network calls enabled.')
-  nock.enableNetConnect()
+  debug('Network calls enabled.');
+  nock.enableNetConnect();
 }
 
 function disableNetwork() {
-  debug('Network calls disabled.')
-  nock.disableNetConnect()
+  debug('Network calls disabled.');
+  nock.disableNetConnect();
 }
 
 function clear() {
-  debug('Clearing Nock interceptors and recordings.')
-  nock.cleanAll()
-  nock.recorder.clear()
+  debug('Clearing Nock interceptors and recordings.');
+  nock.cleanAll();
+  nock.recorder.clear();
 }
 
 function intercept(scope) {
-  debug(`Adding interceptor for scope: ${scope}`)
-  return nock(scope)
+  debug(`Adding interceptor for scope: ${scope}`);
+  return nock(scope);
 }
 
 function startRecording({ requestHeaders = false } = {}) {
-  debug('Started recording.')
-  isRecording = true
+  debug('Started recording.');
+  isRecording = true;
   nock.recorder.rec({
     dont_print: true,
     output_objects: true,
-    enable_reqheaders_recording: requestHeaders
-  })
+    enable_reqheaders_recording: requestHeaders,
+  });
 }
 
 function getRecordedCalls() {
-  const calls = nock.recorder.play()
-  debug(`Stopped recording, captured ${calls.length} network call(s).`)
-  return calls
+  const calls = nock.recorder.play();
+  debug(`Stopped recording, captured ${calls.length} network call(s).`);
+  return calls;
 }
 
 function loadCalls(calls) {
-  debug(`Loaded ${calls.length} saved network call(s).`)
-  return nock.define(calls)
+  debug(`Loaded ${calls.length} saved network call(s).`);
+  return nock.define(calls);
 }
 
 export default {
@@ -92,13 +92,13 @@ export default {
   getRecordedCalls,
   isRecording: () => isRecording,
   loadCalls,
-  acquire: createLock(release => {
-    enable()
+  acquire: createLock((release) => {
+    enable();
     return () => {
-      enableNetwork()
-      disable()
-      clear()
-      return release()
-    }
-  })
-}
+      enableNetwork();
+      disable();
+      clear();
+      return release();
+    };
+  }),
+};

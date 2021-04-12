@@ -8,11 +8,11 @@
         "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json",
         "rawHeaders": [
           "Date",
-          "Sun, 19 Nov 2017 03:41:06 GMT",
+          "Mon, 12 Apr 2021 07:46:58 GMT",
           "Content-Type",
           "application/json; charset=utf-8",
           "Content-Length",
-          "621",
+          "857",
           "Connection",
           "close",
           "Vary",
@@ -20,15 +20,17 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "1042",
+          "908",
           "X-RateLimit-Reset",
-          "1511062867",
+          "1618213619",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
-          "\"22d944d0ce07b5872ec0e31381b82ea6\"",
+          "\"dd1ecd214f8dd4e131b1e82b873a273e\"",
           "Access-Control-Allow-Origin",
-          "*"
+          "*",
+          "X-Cache-Status",
+          "HIT"
         ],
         "reqheaders": {
           "host": "musicbrainz.org"
@@ -41,16 +43,29 @@
               "US"
             ],
             "name": "United States",
-            "sort-name": "United States"
+            "sort-name": "United States",
+            "type": null,
+            "type-id": null
+          },
+          "begin-area": {
+            "disambiguation": "",
+            "id": "a640b45c-c173-49b1-8030-973603e895b5",
+            "name": "Aberdeen",
+            "sort-name": "Aberdeen",
+            "type": null,
+            "type-id": null
           },
           "begin_area": {
             "disambiguation": "",
             "id": "a640b45c-c173-49b1-8030-973603e895b5",
             "name": "Aberdeen",
-            "sort-name": "Aberdeen"
+            "sort-name": "Aberdeen",
+            "type": null,
+            "type-id": null
           },
           "country": "US",
           "disambiguation": "90s US grunge band",
+          "end-area": null,
           "end_area": null,
           "gender": null,
           "gender-id": null,
@@ -58,7 +73,8 @@
           "ipis": [
           ],
           "isnis": [
-            "0000000123486830"
+            "0000000123486830",
+            "0000000123487390"
           ],
           "life-span": {
             "begin": "1988-01",
@@ -70,6 +86,7 @@
           "type": "Group",
           "type-id": "e431f5f6-b5d2-343d-8b36-72607fffb74b"
         },
+        "responseIsBinary": false,
         "scope": "https://musicbrainz.org:443",
         "status": 200
       }
