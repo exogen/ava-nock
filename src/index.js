@@ -21,6 +21,7 @@ async function beforeEach(t) {
   t.context.nock = context;
   debug(`Starting beforeEach hook: ${context.title}`);
   const release = await nockManager.acquire();
+  debug(`Lock acquired: ${context.title}`);
   context.release = release;
   const fixture = await loadFixture(t);
   if (fixture || !permissions.network) {
@@ -59,7 +60,9 @@ async function afterEach(t) {
 }
 
 function afterEachAlways(t) {
-  t.context.nock.release();
+  const context = t.context.nock;
+  context.release();
+  debug(`Lock released: ${context.title}`);
 }
 
 export function setupTests(ava = require(process.env.AVA_PATH || 'ava')) {
