@@ -2,9 +2,11 @@ import zlib from 'zlib';
 import createLogger from 'debug';
 
 const debug = createLogger('ava-nock:encoding');
+
 const decoders = new Map([
   ['gzip', zlib.gunzip],
   ['deflate', zlib.inflate],
+  ['br', zlib.brotliDecompress],
 ]);
 
 function findLastEncoding(headers) {

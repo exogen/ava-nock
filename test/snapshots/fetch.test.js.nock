@@ -13,7 +13,7 @@
         "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json",
         "rawHeaders": [
           "Date",
-          "Tue, 13 Apr 2021 03:21:04 GMT",
+          "Tue, 13 Apr 2021 07:38:55 GMT",
           "Content-Type",
           "application/json; charset=utf-8",
           "Transfer-Encoding",
@@ -25,17 +25,17 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "1126",
+          "672",
           "X-RateLimit-Reset",
-          "1618284066",
+          "1618299535",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
-          "W/\"50375d569b8abc25bb65c37002929693\"",
+          "W/\"c478da8c0e205ef3673fc15ee551c155\"",
           "Access-Control-Allow-Origin",
           "*",
           "X-Cache-Status",
-          "STALE"
+          "MISS"
         ],
         "reqheaders": {
           "accept": [
@@ -49,7 +49,7 @@
           ],
           "host": "musicbrainz.org"
         },
-        "response": "{\"ipis\":[],\"type\":\"Group\",\"area\":{\"disambiguation\":\"\",\"iso-3166-1-codes\":[\"US\"],\"type-id\":null,\"sort-name\":\"United States\",\"id\":\"489ce91b-6658-3307-9877-795b68554c98\",\"name\":\"United States\",\"type\":null},\"end_area\":null,\"begin-area\":{\"sort-name\":\"Aberdeen\",\"type-id\":null,\"id\":\"a640b45c-c173-49b1-8030-973603e895b5\",\"name\":\"Aberdeen\",\"type\":null,\"disambiguation\":\"\"},\"end-area\":null,\"sort-name\":\"Nirvana\",\"name\":\"Nirvana\",\"gender\":null,\"isnis\":[\"0000000123486830\",\"0000000123487390\"],\"gender-id\":null,\"disambiguation\":\"90s US grunge band\",\"country\":\"US\",\"begin_area\":{\"sort-name\":\"Aberdeen\",\"type-id\":null,\"id\":\"a640b45c-c173-49b1-8030-973603e895b5\",\"name\":\"Aberdeen\",\"type\":null,\"disambiguation\":\"\"},\"type-id\":\"e431f5f6-b5d2-343d-8b36-72607fffb74b\",\"id\":\"5b11f4ce-a62d-471e-81fc-a69a8278c7da\",\"life-span\":{\"begin\":\"1988-01\",\"ended\":true,\"end\":\"1994-04-05\"}}",
+        "response": "{\"disambiguation\":\"90s US grunge band\",\"ipis\":[],\"begin-area\":{\"sort-name\":\"Aberdeen\",\"type\":null,\"id\":\"a640b45c-c173-49b1-8030-973603e895b5\",\"type-id\":null,\"disambiguation\":\"\",\"name\":\"Aberdeen\"},\"type\":\"Group\",\"isnis\":[\"0000000123486830\",\"0000000123487390\"],\"gender-id\":null,\"gender\":null,\"country\":\"US\",\"id\":\"5b11f4ce-a62d-471e-81fc-a69a8278c7da\",\"type-id\":\"e431f5f6-b5d2-343d-8b36-72607fffb74b\",\"life-span\":{\"begin\":\"1988-01\",\"ended\":true,\"end\":\"1994-04-05\"},\"sort-name\":\"Nirvana\",\"end-area\":null,\"name\":\"Nirvana\",\"begin_area\":{\"sort-name\":\"Aberdeen\",\"type\":null,\"id\":\"a640b45c-c173-49b1-8030-973603e895b5\",\"type-id\":null,\"disambiguation\":\"\",\"name\":\"Aberdeen\"},\"end_area\":null,\"area\":{\"type-id\":null,\"id\":\"489ce91b-6658-3307-9877-795b68554c98\",\"iso-3166-1-codes\":[\"US\"],\"disambiguation\":\"\",\"name\":\"United States\",\"type\":null,\"sort-name\":\"United States\"}}",
         "responseIsBinary": false,
         "scope": "https://musicbrainz.org:443",
         "status": 200
@@ -65,7 +65,7 @@
         "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da",
         "rawHeaders": [
           "Date",
-          "Tue, 13 Apr 2021 03:21:05 GMT",
+          "Tue, 13 Apr 2021 07:38:56 GMT",
           "Content-Type",
           "application/xml; charset=utf-8",
           "Transfer-Encoding",
@@ -77,9 +77,9 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "928",
+          "1075",
           "X-RateLimit-Reset",
-          "1618284066",
+          "1618299537",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
@@ -87,7 +87,7 @@
           "Access-Control-Allow-Origin",
           "*",
           "X-Cache-Status",
-          "STALE"
+          "MISS"
         ],
         "reqheaders": {
           "accept": [
