@@ -4,28 +4,21 @@ import { setupTests } from '../src';
 
 setupTests();
 
-test('using fetch to get JSON', (t) => {
-  return fetch(
+test('using fetch to get JSON', async (t) => {
+  const response = await fetch(
     'https://musicbrainz.org/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json'
-  )
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      t.is(data.name, 'Nirvana');
-    });
+  );
+  const data = await response.json();
+  t.is(data.name, 'Nirvana');
+  t.snapshot(data);
 });
 
-test('using fetch to get XML', (t) => {
-  return fetch(
+test('using fetch to get XML', async (t) => {
+  const response = await fetch(
     'https://musicbrainz.org/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da'
-  )
-    .then((response) => {
-      return response.text();
-    })
-    .then((data) => {
-      t.true(data.startsWith('<'));
-    });
+  );
+  const data = await response.text();
+  t.true(data.startsWith('<'));
 });
 
 test('another test', (t) => {

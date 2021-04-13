@@ -44,14 +44,12 @@ import { setupTests } from 'ava-nock';
 
 setupTests();
 
-test('using fetch to get JSON', (t) => {
-  return fetch(
+test('using fetch to get JSON', async (t) => {
+  const response = await fetch(
     'https://musicbrainz.org/ws/2/artist/c8da2e40-bd28-4d4e-813a-bd2f51958ba8?fmt=json'
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      t.is(data.name, 'Lures');
-    });
+  );
+  const data = await response.json();
+  t.is(data.name, 'Lures');
 });
 ```
 
@@ -63,8 +61,8 @@ requests and responses are stored for later playback.
 Note that due to the way Nock works by globally intercepting requests to the
 `http` and `https` modules, each test in a file that calls `setupTests()` will
 effectively be run serially – otherwise there is no way to isolate requests
-per-test. The `beforeEach` hook will enforce this for you automatically. Parallel
-tests running in different processes are not affected.
+per-test. The `beforeEach` hook will enforce this for you automatically.
+Parallel tests running in different processes are not affected.
 
 ## Modes
 
@@ -112,6 +110,17 @@ saved fixture so that clients don’t attempt to decode it again.
 
 Set this to `false` to leave responses encoded.
 
+#### fixtureDir
+
+The directory relative to each test file in which to store Nock fixtures. The
+output structure mirrors how AVA’s snapshots work: if your test file is at
+`src/file.test.js`, and this is set to `fixtures`, the fixture file will be
+`src/fixtures/file.test.js.nock`.
+
+If unset, it will use same directory as snapshots via AVA’s
+`meta.snapshotDirectory` value if available, or a default value of `snapshots`
+otherwise.
+
 #### pathFilter
 
 A function or array of arguments to pass to Nock’s `filteringPath` method on
@@ -120,11 +129,11 @@ and outgoing fixture paths.
 
 For example, the following value will cause any saved fixtures to have
 `secretKey` query parameters replaced with `secretKey=*`, and will likewise
-cause any requests with a `secretKey` value to match against it (the `*` is
-not meaningful, it’s just an example placeholder). The requests themselves will
-be sent with their original, unaltered `secretKey` – but it will be censored
-in the fixture. This way you can use sensitive values in your requests but
-keep them out of source control.
+cause any requests with a `secretKey` value to match against it (the `*` is not
+meaningful, it’s just an example placeholder). The requests themselves will be
+sent with their original, unaltered `secretKey` – but it will be censored in the
+fixture. This way you can use sensitive values in your requests but keep them
+out of source control.
 
 ```js
 {

@@ -4,8 +4,8 @@ import { setupTests } from '../src';
 
 setupTests();
 
-test('using request', (t) => {
-  return new Promise((resolve, reject) => {
+test('using request', async (t) => {
+  const data = await new Promise((resolve, reject) => {
     request(
       {
         url:
@@ -24,7 +24,7 @@ test('using request', (t) => {
         }
       }
     );
-  }).then((data) => {
-    t.is(data.name, 'Nirvana');
   });
+  t.is(data.name, 'Nirvana');
+  t.snapshot(data);
 });
