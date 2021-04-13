@@ -28,8 +28,8 @@ Likewise, there are multiple levels of granularity at which to capture requests.
 One approach is to generate a hash for each request and serve the same response
 any time a matching request is made throughout the entire test suite. Another
 approach is to isolate the specific requests made in each test. This library
-currently supports the latter approach (although it was designed with the former
-approach in mind – maybe someday).
+currently uses the latter approach, so that each test’s requests are completely
+isolated from one another.
 
 ## Usage
 
@@ -54,9 +54,8 @@ test('using fetch to get JSON', async (t) => {
 ```
 
 Fixtures behave similarly to AVA snapshots: they are stored in a `.nock` file
-alongside the test file that generated them (or, like snapshots, an adjacent
-`fixtures` or `__fixtures__` directory). Within each fixture, each test’s
-requests and responses are stored for later playback.
+alongside snapshots, named after the test file that generated them. Within each
+fixture, each test’s requests and responses are stored for later playback.
 
 Note that due to the way Nock works by globally intercepting requests to the
 `http` and `https` modules, each test in a file that calls `setupTests()` will
