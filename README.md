@@ -103,9 +103,9 @@ file, or by importing and calling `configure()`.
 When Nock outputs a response, it is normally minimally altered from how it
 arrived. If the response is compressed, Nock will output an array of encoded
 buffers. By default, ava-nock will instead attempt to decode responses encoded
-with `gzip` and `deflate` so that fixtures are more easily inspectable. If
-successful, the relevant `Content-Encoding` header will also be removed from the
-saved fixture so that clients don’t attempt to decode it again.
+with `gzip`, `deflate`, and `br` so that fixtures are more easily inspectable.
+If successful, the relevant `Content-Encoding` header will also be removed from
+the saved fixture so that clients don’t attempt to decode it again.
 
 Set this to `false` to leave responses encoded.
 
