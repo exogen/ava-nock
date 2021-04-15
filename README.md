@@ -17,7 +17,7 @@ $ yarn add ava-nock --dev
 
 ## Features
 
-- It just works: call the setup functions and you’re good to go, requiring no
+- It just works: call the setup function and you’re good to go, requiring no
   changes to your tests.
 - Strict isolation of HTTP calls per test so you can be certain of exactly what
   each test does.
