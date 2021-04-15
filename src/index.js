@@ -6,7 +6,7 @@ import {
   initFixtures,
   loadFixture,
   saveFixture,
-  applyPathFilterToScope,
+  applyFiltersToScope,
 } from './fixtures';
 import { permissions } from './modes';
 
@@ -31,7 +31,7 @@ async function beforeEach(t) {
   }
   context.inputCalls = fixture;
   if (fixture && fixture.length) {
-    context.scopes = nockManager.loadCalls(fixture).map(applyPathFilterToScope);
+    context.scopes = nockManager.loadCalls(fixture).map(applyFiltersToScope);
   } else {
     context.scopes = [];
   }
@@ -51,7 +51,9 @@ async function afterEach(t) {
         t.fail(
           `The following requests from the test fixture were not made:\n\n  ${scope
             .pendingMocks()
-            .join('\n  ')}\n\nConsider re-recording the test.`
+            .join(
+              '\n  '
+            )}\n\nVerify that your test and code are correct. If they are, consider re-recording the test.`
         );
       }
     });

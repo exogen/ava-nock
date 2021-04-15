@@ -54,8 +54,26 @@
   },
   "ava-nock": {
     "pathFilter": [
-      "([?&]secretKey=)([^&]*)",
-      "$1*"
+      "([?&]secretKey=)([^&#]+)",
+      "$1<secret>"
+    ],
+    "headerFilter": {
+      "x-cache-status": [
+        ".+",
+        ""
+      ],
+      "authorization": [
+        ".+",
+        "<secret>"
+      ]
+    },
+    "requestBodyFilter": [
+      "(\"password\":\\s*)\"[^\"]+\"",
+      "$1\"<secret>\""
+    ],
+    "responseBodyFilter": [
+      "(\"(password|authorization)\":\\s*)\"[^\"]+\"",
+      "$1\"<secret>\""
     ]
   },
   "prettier": {

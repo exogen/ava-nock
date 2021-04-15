@@ -1,5 +1,8 @@
 # ava-nock
 
+Drop-in, zero-config HTTP record & reply for
+[AVA](https://github.com/avajs/ava)!
+
 Install with npm:
 
 ```console
@@ -11,6 +14,16 @@ Install with Yarn:
 ```console
 $ yarn add ava-nock --dev
 ```
+
+## Features
+
+- It just works: call the setup functions and you’re good to go, requiring no
+  changes to your tests.
+- Strict isolation of HTTP calls per test so you can be certain of exactly what
+  each test does.
+- Recorded fixtures can filter out sensitive values like API keys, auth tokens,
+  passwords, etc.
+- Compatible with any HTTP client.
 
 ## How it works
 
@@ -120,6 +133,27 @@ If unset, it will use same directory as snapshots via AVA’s
 `meta.snapshotDirectory` value if available, or a default value of `snapshots`
 otherwise.
 
+#### headerFilter
+
+An object mapping header names to replacement functions or arrays of arguments
+to pass to `.replace()` on the header value. The transformation will be applied
+to outgoing fixtures for _both the request headers and response headers_. This
+means that the filtered response headers will be used when the test is replayed,
+so you should ensure that no part of your test depends on the filtered value of
+the headers; otherwise, your test could pass when being recorded and fail when
+played back, or vice versa.
+
+If the replacement result is an empty string or null, the header will be removed
+from the fixture entirely.
+
+```js
+{
+  headerFilter: {
+    authorization: ['^(Bearer|Basic) .+$', '$1 <secret>'];
+  }
+}
+```
+
 #### pathFilter
 
 A function or array of arguments to pass to Nock’s `filteringPath` method on
@@ -127,15 +161,41 @@ each scope. The transformation will be applied to both incoming request paths
 and outgoing fixture paths.
 
 For example, the following value will cause any saved fixtures to have
-`secretKey` query parameters replaced with `secretKey=*`, and will likewise
-cause any requests with a `secretKey` value to match against it (the `*` is not
-meaningful, it’s just an example placeholder). The requests themselves will be
-sent with their original, unaltered `secretKey` – but it will be censored in the
-fixture. This way you can use sensitive values in your requests but keep them
-out of source control.
+`secretKey` query parameters replaced with `secretKey=<secret>`, and will
+likewise cause any requests with a `secretKey` value to match against it. The
+replacement value (`<secret>` in this example) is not meaningful, it can be any
+value you deem suitable to store in your fixtures. The requests themselves will
+be sent with their original, unaltered `secretKey` – but it will be censored in
+the fixture. This way you can use sensitive values in your requests but keep
+them out of source control.
 
 ```js
 {
-  pathFilter: ['([?&]secretKey=)([^&]*)', '$1*'];
+  pathFilter: ['([?&]secretKey=)([^&#]+)', '$1<secret>'];
 }
 ```
+
+#### requestBodyFilter
+
+A function or array of arguments to pass to Nock’s `filteringRequestBody` method
+on each scope. The transformation will be applied to both incoming request
+bodies and outgoing fixture bodies.
+
+Note that it’s possible for Nock to output the request body as something other
+than a string; for example, if it detects that it’s a JSON object. In this case,
+ava-nock will call `JSON.stringify` on it first so that `filteringRequestBody`
+always receives a string.
+
+#### responseBodyFilter
+
+A function or array of arguments to pass to `.replace()` on the response body
+string. The transformation will be applied to outgoing fixture responses,
+meaning that the filtered response body will be used when the test is replayed.
+This means you should ensure that no part of your test depends on the filtered
+part of the response; otherwise, your test could pass when being recorded and
+fail when played back, or vice versa.
+
+Note that it’s possible for Nock to output the response body as something other
+than a string; for example, if the response is still encoded, or if it detects
+that it’s a JSON object. In this case, ava-nock will call `JSON.stringify` on it
+first.

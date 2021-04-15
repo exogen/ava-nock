@@ -8,7 +8,7 @@
         "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json",
         "rawHeaders": [
           "Date",
-          "Tue, 13 Apr 2021 07:38:55 GMT",
+          "Thu, 15 Apr 2021 07:00:44 GMT",
           "Content-Type",
           "application/json; charset=utf-8",
           "Content-Length",
@@ -20,17 +20,15 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "650",
+          "977",
           "X-RateLimit-Reset",
-          "1618299535",
+          "1618470045",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
-          "\"a821be67d4dc50e6690dfe859be7cfd8\"",
+          "\"ea810862a07030366f1cb37dc4a7e907\"",
           "Access-Control-Allow-Origin",
-          "*",
-          "X-Cache-Status",
-          "HIT"
+          "*"
         ],
         "reqheaders": {
           "host": "musicbrainz.org"

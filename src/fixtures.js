@@ -99,7 +99,32 @@ export async function loadFixture(t) {
     return null;
   }
   const fixtures = await loadFixtures();
-  return fixtures.get(context.title) || null;
+  const fixture = fixtures.get(context.title);
+  if (!fixture) {
+    return null;
+  }
+  return fixture.map((call) => {
+    const { headerFilter } = config;
+    if (headerFilter) {
+      const filterMap = new Map();
+      for (const name in headerFilter) {
+        filterMap.set(name.toLowerCase(), headerFilter[name]);
+      }
+      for (const name in call.reqheaders) {
+        const filter = filterMap.get(name.toLowerCase());
+        if (Array.isArray(filter)) {
+          const args = [...filter];
+          if (typeof args[0] === 'string') {
+            args[0] = new RegExp(args[0], 'g');
+          }
+          call.reqheaders[name] = args[0];
+        } else if (typeof filter === 'function') {
+          call.reqheaders[name] = filter;
+        }
+      }
+    }
+    return call;
+  });
 }
 
 async function getOutputCalls(recordedCalls) {
@@ -107,9 +132,7 @@ async function getOutputCalls(recordedCalls) {
   if (config.decodeResponse) {
     outputCalls = await Promise.all(outputCalls.map(decodeResponse));
   }
-  if (config.pathFilter) {
-    outputCalls = outputCalls.map(applyPathFilterToCall);
-  }
+  outputCalls = outputCalls.map(applyFiltersToCall);
   return outputCalls;
 }
 
@@ -145,7 +168,7 @@ export async function saveFixture(t) {
 export function applyPathFilterToScope(scope) {
   const { pathFilter } = config;
   if (typeof pathFilter === 'function') {
-    return scope.filteringPath(config.pathFilter);
+    return scope.filteringPath(pathFilter);
   } else if (Array.isArray(pathFilter)) {
     const args = [...pathFilter];
     if (typeof args[0] === 'string') {
@@ -155,6 +178,28 @@ export function applyPathFilterToScope(scope) {
   } else if (pathFilter != null) {
     throw new Error(`Unknown pathFilter type: ${pathFilter}`);
   }
+  return scope;
+}
+
+export function applyRequestBodyFilterToScope(scope) {
+  const { requestBodyFilter } = config;
+  if (typeof requestBodyFilter === 'function') {
+    return scope.filteringRequestBody(requestBodyFilter);
+  } else if (Array.isArray(requestBodyFilter)) {
+    const args = [...requestBodyFilter];
+    if (typeof args[0] === 'string') {
+      args[0] = new RegExp(args[0], 'g');
+    }
+    return scope.filteringRequestBody(...args);
+  } else if (requestBodyFilter != null) {
+    throw new Error(`Unknown pathFilter type: ${requestBodyFilter}`);
+  }
+  return scope;
+}
+
+export function applyFiltersToScope(scope) {
+  scope = applyPathFilterToScope(scope);
+  scope = applyRequestBodyFilterToScope(scope);
   return scope;
 }
 
@@ -170,12 +215,149 @@ export function applyPathFilterToCall(call) {
     if (typeof args[0] === 'string') {
       args[0] = new RegExp(args[0], 'g');
     }
-    return {
+    call = {
       ...call,
       path: call.path.replace(...args),
     };
   } else if (pathFilter != null) {
     throw new Error(`Unknown pathFilter type: ${pathFilter}`);
   }
+  return call;
+}
+
+export function applyRequestBodyFilterToCall(call) {
+  let { requestBodyFilter } = config;
+  if (requestBodyFilter) {
+    if (Array.isArray(requestBodyFilter)) {
+      const args = [...requestBodyFilter];
+      if (typeof args[0] === 'string') {
+        args[0] = new RegExp(args[0], 'g');
+      }
+      requestBodyFilter = (body) => body.replace(...args);
+    }
+    if (typeof requestBodyFilter === 'function') {
+      const shouldParseBody =
+        call.body != null && typeof call.body !== 'string';
+      const bodyString = shouldParseBody
+        ? JSON.stringify(call.body)
+        : call.body;
+      const newBodyString = requestBodyFilter(bodyString);
+      const newBody = shouldParseBody
+        ? JSON.parse(newBodyString)
+        : newBodyString;
+      call = {
+        ...call,
+        body: newBody,
+      };
+    } else {
+      throw new Error(`Unknown requestBodyFilter type: ${requestBodyFilter}`);
+    }
+  }
+  return call;
+}
+
+export function applyResponseBodyFilterToCall(call) {
+  let { responseBodyFilter } = config;
+  if (responseBodyFilter) {
+    if (Array.isArray(responseBodyFilter)) {
+      const args = [...responseBodyFilter];
+      if (typeof args[0] === 'string') {
+        args[0] = new RegExp(args[0], 'g');
+      }
+      responseBodyFilter = (body) => body.replace(...args);
+    }
+    if (typeof responseBodyFilter === 'function') {
+      const shouldParseBody =
+        call.response != null && typeof call.response !== 'string';
+      const bodyString = shouldParseBody
+        ? JSON.stringify(call.response)
+        : call.response;
+      const newBodyString = responseBodyFilter(bodyString);
+      const newBody = shouldParseBody
+        ? JSON.parse(newBodyString)
+        : newBodyString;
+      call = {
+        ...call,
+        response: newBody,
+      };
+    } else {
+      throw new Error(`Unknown responseBodyFilter type: ${responseBodyFilter}`);
+    }
+  }
+  return call;
+}
+
+function getTypeName(value) {
+  return Object.prototype.toString.call(value).slice(8, -1);
+}
+
+export function applyHeaderFilterToCall(call) {
+  const { headerFilter } = config;
+  if (headerFilter) {
+    if (getTypeName(headerFilter) === 'Object') {
+      const headerReplacers = new Map(
+        Object.entries(headerFilter).map(([name, value]) => {
+          if (Array.isArray(value)) {
+            const args = [...value];
+            if (typeof args[0] === 'string') {
+              args[0] = new RegExp(args[0], 'g');
+            }
+            value = (str) => str.replace(...args);
+          }
+          return [name.toLowerCase(), value];
+        })
+      );
+      const newRawHeaders = [];
+      for (let i = 0; i < call.rawHeaders.length; i += 2) {
+        const name = call.rawHeaders[i];
+        const value = call.rawHeaders[i + 1];
+        const replacer = headerReplacers.get(name.toLowerCase());
+        if (replacer) {
+          const newValue = replacer(value);
+          if (newValue != null && newValue !== '') {
+            newRawHeaders.push(name, newValue);
+          }
+        } else {
+          newRawHeaders.push(name, value);
+        }
+      }
+      const newReqHeaders = {};
+      Object.entries(call.reqheaders).forEach(([name, value]) => {
+        const replacer = headerReplacers.get(name.toLowerCase());
+        if (replacer) {
+          if (Array.isArray(value)) {
+            const newValue = value
+              .map((item) => replacer(item))
+              .filter((item) => item != null && item !== '');
+            if (newValue.length) {
+              newReqHeaders[name] = newValue;
+            }
+          } else {
+            const newValue = replacer(value);
+            if (newValue != null && newValue !== '') {
+              newReqHeaders[name] = newValue;
+            }
+          }
+        } else {
+          newReqHeaders[name] = value;
+        }
+      });
+      call = {
+        ...call,
+        rawHeaders: newRawHeaders,
+        reqheaders: newReqHeaders,
+      };
+    } else {
+      throw new Error(`Unknown headerFilter type: ${headerFilter}`);
+    }
+  }
+  return call;
+}
+
+export function applyFiltersToCall(call) {
+  call = applyPathFilterToCall(call);
+  call = applyHeaderFilterToCall(call);
+  call = applyRequestBodyFilterToCall(call);
+  call = applyResponseBodyFilterToCall(call);
   return call;
 }

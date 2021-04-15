@@ -1,14 +1,79 @@
 [
   [
+    "making a request with a filtered password",
+    [
+      {
+        "body": {
+          "password": "<secret>",
+          "username": "hello"
+        },
+        "method": "POST",
+        "path": "/post",
+        "rawHeaders": [
+          "Date",
+          "Thu, 15 Apr 2021 07:00:46 GMT",
+          "Content-Type",
+          "application/json; charset=utf-8",
+          "Content-Length",
+          "459",
+          "Connection",
+          "close",
+          "ETag",
+          "W/\"1cb-Aboi+6b2Sq37fEO1nW9sVp/y/Po\"",
+          "Vary",
+          "Accept-Encoding",
+          "set-cookie",
+          "sails.sid=s%3ASmRo5XNCyppue8vSZS9Ppbkm7w2G4Kod.CJGjXqGPAB0W6BX0bPy3U3rFXUwk6SAQZhvPjSshNGE; Path=/; HttpOnly"
+        ],
+        "reqheaders": {
+          "accept": "application/json, text/plain, */*",
+          "content-length": 39,
+          "content-type": "application/json;charset=utf-8",
+          "host": "postman-echo.com"
+        },
+        "response": {
+          "args": {
+          },
+          "data": {
+            "password": "<secret>",
+            "username": "hello"
+          },
+          "files": {
+          },
+          "form": {
+          },
+          "headers": {
+            "accept": "application/json, text/plain, */*",
+            "content-length": "39",
+            "content-type": "application/json;charset=utf-8",
+            "host": "postman-echo.com",
+            "user-agent": "axios/0.21.1",
+            "x-amzn-trace-id": "Root=1-6077e49e-4ae5bdf44f52af5d758f68cd",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https"
+          },
+          "json": {
+            "password": "<secret>",
+            "username": "hello"
+          },
+          "url": "https://postman-echo.com/post"
+        },
+        "responseIsBinary": false,
+        "scope": "https://postman-echo.com:443",
+        "status": 200
+      }
+    ]
+  ],
+  [
     "making a request with a filtered secret key",
     [
       {
         "body": "",
         "method": "GET",
-        "path": "/ws/2/artist/c8da2e40-bd28-4d4e-813a-bd2f51958ba8?secretKey=*",
+        "path": "/ws/2/artist/c8da2e40-bd28-4d4e-813a-bd2f51958ba8?secretKey=<secret>",
         "rawHeaders": [
           "Date",
-          "Tue, 13 Apr 2021 07:38:56 GMT",
+          "Thu, 15 Apr 2021 07:00:45 GMT",
           "Content-Type",
           "application/json; charset=utf-8",
           "Content-Length",
@@ -20,17 +85,15 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "900",
+          "708",
           "X-RateLimit-Reset",
-          "1618299537",
+          "1618470045",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
-          "\"af00009d7f51d3fe6f04fcae93f06936\"",
+          "\"8b30f3e06363d06c7042249fb4c0dfb9\"",
           "Access-Control-Allow-Origin",
-          "*",
-          "X-Cache-Status",
-          "MISS"
+          "*"
         ],
         "reqheaders": {
           "accept": "application/json, text/plain, */*",
@@ -89,6 +152,54 @@
     ]
   ],
   [
+    "making a request with filtered headers",
+    [
+      {
+        "body": "",
+        "method": "GET",
+        "path": "/get",
+        "rawHeaders": [
+          "Date",
+          "Thu, 15 Apr 2021 07:00:46 GMT",
+          "Content-Type",
+          "application/json; charset=utf-8",
+          "Content-Length",
+          "305",
+          "Connection",
+          "close",
+          "ETag",
+          "W/\"131-sf+2J7RVrPFvsN19SjfqW32gzLM\"",
+          "Vary",
+          "Accept-Encoding",
+          "set-cookie",
+          "sails.sid=s%3AVgx0Ae8Pt3YVqgdWwuwl3TGBJZZeOI24.p7PQ0Z8BVnFq%2BAJHF2h0SUsSdn3PpW8e44tvAAJ8Fek; Path=/; HttpOnly"
+        ],
+        "reqheaders": {
+          "accept": "application/json, text/plain, */*",
+          "authorization": "<secret>",
+          "host": "postman-echo.com"
+        },
+        "response": {
+          "args": {
+          },
+          "headers": {
+            "accept": "application/json, text/plain, */*",
+            "authorization": "<secret>",
+            "host": "postman-echo.com",
+            "user-agent": "axios/0.21.1",
+            "x-amzn-trace-id": "Root=1-6077e49e-50d948a748962280112afa9b",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https"
+          },
+          "url": "https://postman-echo.com/get"
+        },
+        "responseIsBinary": false,
+        "scope": "https://postman-echo.com:443",
+        "status": 200
+      }
+    ]
+  ],
+  [
     "using axios",
     [
       {
@@ -97,7 +208,7 @@
         "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=json",
         "rawHeaders": [
           "Date",
-          "Tue, 13 Apr 2021 07:38:55 GMT",
+          "Thu, 15 Apr 2021 07:00:44 GMT",
           "Content-Type",
           "application/json; charset=utf-8",
           "Content-Length",
@@ -109,17 +220,15 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "671",
+          "996",
           "X-RateLimit-Reset",
-          "1618299535",
+          "1618470045",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
-          "\"a821be67d4dc50e6690dfe859be7cfd8\"",
+          "\"ea810862a07030366f1cb37dc4a7e907\"",
           "Access-Control-Allow-Origin",
-          "*",
-          "X-Cache-Status",
-          "MISS"
+          "*"
         ],
         "reqheaders": {
           "accept": "application/json, text/plain, */*",
@@ -191,7 +300,7 @@
         "path": "/ws/2/artist/5b11f4ce-a62d-471e-81fc-a69a8278c7da?fmt=xml",
         "rawHeaders": [
           "Date",
-          "Tue, 13 Apr 2021 07:38:56 GMT",
+          "Thu, 15 Apr 2021 07:00:45 GMT",
           "Content-Type",
           "application/xml; charset=utf-8",
           "Transfer-Encoding",
@@ -203,17 +312,15 @@
           "X-RateLimit-Limit",
           "1200",
           "X-RateLimit-Remaining",
-          "1077",
+          "854",
           "X-RateLimit-Reset",
-          "1618299537",
+          "1618470045",
           "Server",
           "Plack::Handler::Starlet",
           "ETag",
           "\"7baabb90f872d8f2e6a89774d80a93a7\"",
           "Access-Control-Allow-Origin",
-          "*",
-          "X-Cache-Status",
-          "MISS"
+          "*"
         ],
         "reqheaders": {
           "accept": "application/json, text/plain, */*",
