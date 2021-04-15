@@ -1,6 +1,6 @@
 # ava-nock
 
-Drop-in, zero-config HTTP record & reply for
+Drop-in, zero-config HTTP record & replay for
 [AVA](https://github.com/avajs/ava)!
 
 Install with npm:
